@@ -1,10 +1,10 @@
 {exec} = require 'child_process'
 somata = require 'somata'
 
-series = process.env.SERIES
-interval = parseInt process.env.INTERVAL || 1000
+SERIES = process.env.SERIES
+INTERVAL = parseInt process.env.INTERVAL || 1000
 
-if !series
+if !SERIES
     console.log "Requires $SERIES to be set."
     process.exit()
 client = new somata.Client
@@ -21,7 +21,6 @@ getMem = (cb) ->
 showMem = ->
     getMem (err, per) ->
         point = {value: per}
-        client.remote 'influx', 'log', series, point, ->
-        console.log point
+        client.remote 'influx', 'log', SERIES, point, ->
 
-setInterval showMem, interval
+setInterval showMem, INTERVAL
